@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Towards Efficient Classical Integer Factorization</title>
+</head>
+<body>
+
+    <h1>Towards Efficient Classical Integer Factorization</h1>
+
+    <p>The integer factorization problem is widely considered to be a hard problem. However, in my early research in recent months, I have found many doubts. In conclusion, I believe that the factorization of large integers is an important scientific problem of extremely high value that has not been fully studied. The main goal of this article is to break the blind belief that "the integer factorization problem should not be attempted" and to help all number theory and computer science enthusiasts who are interested in studying this problem to build confidence. This article will focus on the integer factorization problem, introducing its properties, its connection with other problems, its research history, and related figures. The required prerequisite knowledge includes elementary computational number theory, computational complexity theory, and a popular science level background in quantum computing.</p>
+
+    <h2>Preface: Contradictory Indicators</h2>
+
+    <p>Let's start with a set of contradictory indicators: which is harder, the integer factorization problem or the graph isomorphism problem? The theoretical computer science (TCS) community generally believes that graph isomorphism is easier, while integer factorization is harder. This is because the best-known algorithm for graph isomorphism has a quasi-polynomial time complexity, i.e., exp(log<sup>O(1)</sup>n). On the other hand, the best-known general number field sieve for integer factorization has a sub-exponential time algorithm, which is about exp(1.9 * n<sup>1/3</sup>).</p>
+
+    <p>However, things get subtle when we take quantum computing into account. The integer factorization problem has a polynomial-time Shor's algorithm on a quantum computer, while it is still unknown whether the graph isomorphism problem has a polynomial-time algorithm in the quantum computing model.</p>
+
+    <p>From the perspective of computational complexity, integer factorization belongs to NP ∩ coNP, while graph isomorphism belongs to NP ∩ coAM. First, it is almost impossible for these two to be NP-complete problems, so they are classified as NP-Intermediate problems; second, since NP ⊆ AM, and under the strong derandomization assumption, this inclusion relation can become an equality, so integer factorization is actually at a slightly lower complexity level, suggesting that it may be simpler.</p>
+
+    <h3>Perspectives on Integer Factorization and Graph Isomorphism Problems</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>This indicator suggests which problem is harder?</th>
+                <th></th>
+                <th>Integer Factorization/Graph Isomorphism is harder</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Best-known classical algorithm</td>
+                <td></td>
+                <td>Integer Factorization is harder</td>
+            </tr>
+            <tr>
+                <td>Best-known quantum algorithm</td>
+                <td></td>
+                <td>Graph Isomorphism is harder</td>
+            </tr>
+            <tr>
+                <td>Computational complexity perspective</td>
+                <td></td>
+                <td>Graph Isomorphism is harder</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>These contradictions suggest a variety of possibilities, mainly including the following three:</p>
+
+    <ol>
+        <li>Integer factorization should have a better classical algorithm. To completely eliminate the contradiction, the integer factorization problem should have at least a quasi-polynomial time algorithm.</li>
+        <li>The graph isomorphism problem should have a polynomial-time algorithm on a quantum computer.</li>
+        <li>Our algorithmic research on integer factorization and graph isomorphism has reached its limit. Quantum computers have the magical ability to change the hardy order of some problems, but they are powerless against the graph isomorphism problem.</li>
+    </ol>
+
+    <p>All three possibilities point to very interesting results. The first two at least mean the birth of new algorithms, and if the third point can be proved, it means that the power of quantum computing is actually very limited. Since this article focuses on integer factorization, we will mainly discuss the first possibility.</p>
+
+    <h2>A Brief History of the Integer Factorization Problem</h2>
+
+    <p>The history of number theory and computation is long and profound. The first algorithm known to mankind, Euclid's algorithm for finding the greatest common divisor, is a number theory algorithm. Before the advent of the information age, primality testing and integer factorization were just two interesting problems in number theory. More famous research includes the primality of numbers in special forms, such as Mersenne primes and Fermat primes; and the story of Cole spending "all his Sundays for three years" to factor 2<sup>67</sup> - 1. In an era when the concept of computational complexity had not yet been born, the definition of prime numbers gave the standard for primality testing. The conclusion that an integer can be uniquely decomposed into a product of prime numbers has been tacitly accepted as a fact since the time of Euclid, and was clearly proposed and proved in Gauss's "Disquisitiones Arithmeticae". Also in "Disquisitiones Arithmeticae", Gauss's evaluation of these two problems was: "The problem of distinguishing prime numbers from composite numbers and of resolving the latter into their prime factors is one of the most important and useful in arithmetic."</p>
+
+    <p>Number theory was long regarded as "useless" mathematics. However, in the 1970s, with the widespread popularization of personal computers based on integrated circuits, computer science entered a golden age. In 1978, the RSA public-key encryption algorithm, based on the hardy of integer factorization, appeared on the historical stage, and the Miller-Rabin, Solovay-Strassen and other primality testing algorithms proposed two years earlier laid the foundation for its practical application. The quadratic sieve born in the 1980s further triggered a cat-and-mouse game between design and cracking. The popularization of the Internet in the 1990s created a huge demand for cryptographic algorithms, and academic discussions on integer factorization also reached a peak around 2000. Representative achievements include the general number field sieve and Shor's algorithm in 1994, and the AKS primality test in 2002. Since then, the industry has begun to popularize HTTPS, and academic discussions have gradually fallen silent. From 2015 to 2019, the proportion of Internet HTTPS traffic increased from 50% to 90%. So far, the public-key cryptographic algorithm represented by RSA has completed its large-scale popularization around the world, and the integer factorization problem has also been elevated from an interesting problem in the pre-computer era and an important academic problem in the pre-Internet era to the cornerstone of the entire modern Internet security.</p>
+
+    <h3>The Prevalence of RSA</h3>
+
+    <p>Of course, the other half of the current public-key cryptography is based on the discrete logarithm problem on elliptic curves, and the representative algorithms are ECDH and ECDSA. It is not easy to count the percentage of traffic protected by RSA in the entire Internet, but we can get a glimpse of the dependence of modern information systems on RSA from the perspective of certificates: readers can open Zhihu in their browsers, click the button to the left of the URL, select "Connection is secure" -> "Certificate is valid" -> "Details" in turn, and check the "Certificate Signature Algorithm" or "Certificate Subject Public Key Info" to know that Zhihu uses RSA; if you use Windows, you can open "certlm.msc" by pressing Win+R and pressing Enter, open "Third-Party Root Certification Authorities" -> "Certificates", and you will find that more than 90% of the root certificates use RSA.</p>
+
+    <h2>Integer Factorization and RSA</h2>
+
+    <h3>Connection</h3>
+
+    <p>If you can efficiently factor integers, you can break RSA, but the reverse is not necessarily true. In addition, various misuses of RSA itself and some data leakage may also lead to security risks, so attacks on RSA can be a separate research topic independent of integer factorization. For attacks on RSA, you can refer to "Twenty Years of Attacks on the RSA Cryptosystem", published by Dan Boneh in 1999, which summarizes the attacks on RSA in the last century. You can also learn from the crypto problems in CTF. Although the two are highly related, the focus of this article is on integer factorization rather than RSA, so I will not elaborate here.</p>
+
+    <h3>Current Research Status</h3>
+
+    <p>As mentioned above, although RSA is already all over the world, related research has almost stagnated. The more famous group that is still working is the French group led by Paul Zimmermann. They factored RSA-829 in 2020. I sent emails to many people, and Pierrick Gaudry replied to me very happily. He told me that there are very few other people in the world who study the integer factorization problem. As far as he knows, there are only Nadia Heninger at UCSD, Peter Schwabe at the Max Planck Institute, and Palash Sarkar in India.</p>
+
+    <h2>Other Problems Related to Integer Factorization</h2>
+
+    <h3>Discrete Logarithm</h3>
+
+    <p>When it comes to integer factorization, it is impossible not to mention the discrete logarithm. In fact, Shor's algorithm can solve both integer factorization and discrete logarithm on a quantum computer. Peter Shor wrote in his memoir "The Early Days of Quantum Computation":</p>
+
+    <blockquote>
+        <p>There's a strange relation between discrete log and factoring. There's no formula for taking an algorithm for one of these problems and applying it to the other. However, any time somebody has found an improved algorithm for one of them, people have reasonably quickly come up with a similar solution for the other one.</p>
+    </blockquote>
+
+    <p>An obvious difference is that by changing the finite group used, the discrete logarithm problem can have many variants, while integer factorization has only one expression. In general, the function field sieve is the best algorithm for discrete logarithms, which has many similarities with the general number field sieve; but for finite fields with small characteristics, there are quasi-polynomial time algorithms.</p>
+
+    <h3>Shor's Algorithm and the Hidden Subgroup Problem</h3>
+
+    <p>The hidden subgroup problem includes integer factorization, discrete logarithm, graph isomorphism, and the shortest vector problem on a lattice, which is another reason to discuss the integer factorization and graph isomorphism problems together. Shor's algorithm can solve the abelian hidden subgroup problem, that is, integer factorization and discrete logarithm, but it is powerless against the graph isomorphism and the shortest vector problem on a lattice.</p>
+
+    <h2>Why We Should Be Confident in the Existence of Efficient Classical Algorithms for Integer Factorization</h2>
+
+    <p>Lack of confidence has seriously inhibited the research of the integer factorization problem. The idea that "integer factorization is hard" is like a thought stamp imprinted on the minds of all who understand the problem, leading to the decline of this field. The only goal of this section is to build confidence and to "demystify" the integer factorization problem from multiple perspectives. Possible technical research directions will be introduced in the next section.</p>
+
+    <ol>
+        <li>Integer factorization is not an NP-complete problem, and there are many people who study NP-complete problems, so it can be studied for sure. As mentioned above, integer factorization is not considered to be an NP-complete problem, let alone an NP-hard problem. This weakens the hardy of the integer factorization problem from the perspective of computational complexity. However, almost no one is studying it now. In contrast, there are many researchers who study the truly hard NP-complete problems under different conditions. The integer factorization problem can be studied completely, and intermediate results can be obtained and published just like studying NP-complete problems to meet the general assessment requirements of the academic community.</li>
+
+        <li>Turing Award winner Ron Rivest is not a good cryptographic algorithm designer. Ron Rivest is certainly a pioneer of modern cryptography. He designed the MD series of hash functions, the RC series of symmetric encryption, and he is the "R" in RSA, which also won him the 2002 Turing Award. However, we all know the story of the MD series. Wang Xiaoyun broke MD5. The cracking of RC4 is also written in textbooks. It led to the abandonment of the Wi-Fi encryption standard WEP and the migration to WPA. The MD6 and RC6 he designed later were not widely adopted. RSA is his only cryptographic algorithm still in use.</li>
+
+        <li>RSA was thought of after drinking, and most early cryptographic algorithms were like that. "The RSA Cryptosystem: History, Algorithm, Primes" records the birth of the RSA algorithm. It is described as:</li>
+    
+        <blockquote>
+            <p>In April 1977, they spent Passover at the house of a student and drank a good deal of wine before returning to their homes at around midnight. Rivest, unable to sleep, lay on the couch with a math textbook and started thinking about their one-way function. He spent the rest of the night formalizing his idea, and he had much of the paper ready by daybreak. The algorithm is now known as RSA – the initials of their surnames in same order as their paper.</p>
+        </blockquote>
+
+        Although public-key cryptography is a major breakthrough, most early cryptographic algorithms inherited the tradition of "coming up with an algorithm off the top of your head, and if it can't be broken, it's a victory." The cracking of cryptography based on the knapsack problem is a famous example. Others, such as the McEliece cryptosystem, we still don't know the principle of its security, but the progress of cracking is slow; however, if the Goppa code in it is replaced with other codes, it is quickly cracked.
+        
+    </ol>
+
+    <ol start="4">
+        <li>RSA is one of the few exceptions that allow the key length to increase over time. Nowadays, cryptographers are very strict with most algorithms, and new algorithms are abandoned if they have even the slightest flaw in the evaluation. However, while the 256-bit key length remains unchanged in elliptic curve cryptography, due to the existence of sub-exponential attacks, RSA requires a much longer key length for the same level of security, and the key length needs to be increased year by year. Out of inertia, people are still using RSA, which is a less secure and slower algorithm compared to the elliptic curve next door.</li>
+
+        <li>Someone has a similar idea. MIT adjunct professor Henry Cohn has a similar idea. He publicly published "Factoring may be easier than you think", but his main criticism is the irrational belief that "100 smart guys have tried this problem and failed, so it's impossible."</li>
+
+        <li>Not many people have studied it. So how many people have studied the integer factorization problem? This website records more than 2,600 number theory researchers. I wrote a crawler to grab the homepages of these scholars and used keywords such as "factorization" for machine and manual screening. I found that less than 30 people had studied this problem. Of course, this only reflects the number of some scholars who have studied this problem, but this number is still surprisingly small. I subjectively believe that the number of experts who have studied integer factorization on record does not exceed 100. The number of citations also shows a clue: the RSA algorithm has been cited nearly 30,000 times, Shor's algorithm has been cited about 14,000 times, and the best classical general number field sieve has only been cited more than 1,000 times. The number of papers on cracking it accounts for less than one-tenth of the total number of related papers!</li>
+
+        <li>Many cryptographers are reluctant to break it. As long as you enter this field, it is not hard to understand this phenomenon: most cryptographers design cryptographic algorithms, and they need to believe that the problems they are based on are hard; only a few specialize in cryptanalysis. Those who design cryptography based on hard number theory problems are naturally reluctant to let their hard-written papers become waste paper, so they will not actively try to solve the related hard problems.</li>
+
+        <li>The suppression of quantum computing and the quantum foam and winter. Both the general number field sieve and Shor's algorithm were published in 1994. There is no doubt that this would shift the attention of many people interested in integer factorization from complex and cumbersome classical algorithms to the small, beautiful, and promising quantum computing, thereby reducing research on classical methods. Quantum computing was proposed by Feynman, who was at Caltech at the time. The original motivation was to simulate quantum systems, and Shor happened to be a student at that school. Shor's algorithm is the main driving force for the current development of quantum computing, and it is far more convincing than Gaussian boson sampling. The quantum computing boom was concentrated around 2019, when Google announced the achievement of "quantum supremacy". I was also attracted by Shor's algorithm at that time, and I taught myself quantum computing and entered the field of quantum information and post-quantum cryptography. However, as time went by, quantum computing gradually changed from a "new type of computer that will change the world" to a bottomless pit field similar to "controlled nuclear fusion is always 50 years away", and it has not yet found a commercialization model. At the end of 2022, Alibaba and Baidu closed their quantum laboratories one after another, and the "quantum winter" theory was rampant. There is no doubt that quantum computing is no longer the darling of Silicon Valley and Wall Street; artificial intelligence is.</li>
+
+        <li>High value does not mean high hardy. Research on integer factorization may lead to a crisis for the entire Internet, which reflects its extremely high research value, but it does not mean that it is extremely hard in itself. As mentioned in the previous section, integer factorization did not attract a lot of research at the beginning, but gradually received attention with the development of computers and the Internet. In the process of its becoming important, the problem itself did not change, and of course the hardy would not change. Other examples, such as the cracking of Rainbow and SIDH, are important news in the circle, but their impact is limited because they are not widely deployed.</li>
+
+        <li>We must know, we shall know. It is known from Ladner's theorem that breaking the integer factorization and graph isomorphism problems is a necessary path to give the answer P=NP to the P vs NP problem. On the other hand, I think that if someone proves P≠NP, the result is boring, and the world will not change because of it.</li>
+    </ol>
+
+    <h2>Early Results and Possible Research Directions</h2>
+
+    <p>This section will introduce some of the results and possible research directions found in the early research.</p>
+
+    <h3>Quadratic Sieve and General Number Field Sieve</h3>
+
+    <p>Carl Pomerance, the inventor of the quadratic sieve, published "A Tale of Two Sieves" in 1996, recalling the invention process of the quadratic sieve and the general number field sieve. The general number field sieve can be seen as a generalization of the quadratic sieve. Both are composed of two similar steps. The first step is to sample many pairs (x, y) with a certain distribution, and the second step is to use linear algebra to find a subset in the set of pairs whose product is a perfect square, which can eventually lead to x<sup>2</sup> ≡ y<sup>2</sup> (mod n), and then calculate gcd(x-y, n) to obtain a non-trivial factor with a high probability. The current literature generally records that the generated pairs need to be graded into products of smaller prime numbers, that is, smooth numbers. However, for algorithm competition contestants, it is not hard to give an algorithm that uses the Legendre symbol to find the product of this perfect square subset in polynomial time, which can avoid factoring the pairs. However, whether there is a square subset in this set is still related to the probability distribution of smooth numbers, that is, the bottleneck of the entire algorithm is the distribution of smooth numbers.</p>
+
+    <p>After a preliminary understanding of the current best integer factorization algorithm, I realized a few points: First, the quadratic sieve and the general number field sieve are not particularly hard. Well-educated undergraduate students in mathematics or computer science, and even outstanding high school students, can fully grasp them; second, in communication, I found that many algorithm competition contestants can give better algorithms for the second step than those in the historical literature, which gave me the early confidence that "this problem can be studied"; finally, I believe that the low probability distribution of smooth numbers limits the further development of this technical route, and intuitively this will not be the final solution. The email exchange with the French scholars also confirmed this view, that is, the quadratic sieve and the general number field sieve have reached their end, and we need a brand new idea.</p>
+
+    <h3>A Simple and Beautiful Formula</h3>
+
+    <p>Let the RSA modulus be n. Through Euler's theorem, we can derive a simple and beautiful property: φ(n)<sup>2</sup> ≡ 1 (mod n). Of course, this property has long been recorded in the literature. It is just that few people directly mention that the Baby-step giant-step algorithm can be directly applied to it to get an O(n<sup>1/4</sup>) algorithm.</p>
+
+    <h3>Thoughts from the AKS Primality Test</h3>
+
+    <p>The AKS primality test utilizes the fact that (x-1)<sup>p</sup> ≡ x<sup>p</sup> - 1 (mod p) holds for a prime number p. One way to analyze this is to clarify the binomial coefficient C(p, k). When p is a prime number and 1 ≤ k < p, C(p, k) ≡ 0 (mod p), and only when k = 0 or k = p, C(p, k) ≡ 1 (mod p). Under the guidance of this idea, it may be necessary to study the binomial coefficients of the RSA composite number n.</p>
+
+    <p>Through Lucas's theorem, we can easily derive a property that looks interesting but we don't know what it's useful for: C(n, k) ≡ C(p, k mod p) * C(q, k mod q) (mod n). And when k = p, C(n, p) ≡ 0 * C(q, p mod q) = 0 (mod n). When k = q, C(n, q) ≡ C(p, q mod p) * 0 = 0 (mod n). That is, the binomial expansion consists of three groups of non-zero parts.</p>
+
+    <h3>Inspiration from Primality Testing and ECM Methods</h3>
+
+    <p>Primality testing is a solved problem. What is confusing is that the information and methods it brings do not seem to be directly applicable to factorization, but the two are obviously closely related. For example, the converse of Fermat's little theorem is not true in some cases. Composite numbers that can pass the Fermat test are called Carmichael numbers, and the Miller-Rabin algorithm is like a patch for the Fermat test, which can factor Carmichael numbers. This example strengthens the intuition that primality testing and integer factorization are highly related, suggesting that we can study integer factorization from the perspective of primality testing, or at least study efficient factorization algorithms for a class of specific composite numbers.</p>
+
+    <p>ECM is a method of integer factorization using elliptic curves. The most interesting intuition left in it is: we find that the ring Z<sub>n</sub> can be added and multiplied, but unfortunately, non-zero elements do not necessarily have inverses, so it is not a finite field. But on second thought, if we find a non-zero element x that does not have an inverse, then gcd(x, n) must give a non-trivial factor, which achieves our goal. I temporarily gave this kind of ring a name called a pseudo-field, and I will just assume that it can be added, multiplied, and divided.</p>
+
+    <h3>Polynomial Root Finding</h3>
+
+    <p>Finding roots and factoring polynomials over finite fields are very easy things. Simply put, for a finite field F<sub>p</sub> and a polynomial f(x) to be rooted, randomly select an integer a and calculate gcd(f(x), (x-a)<sup>(p-1)/2</sup> - 1) to randomly obtain some linear factors of f(x). Repeated use can get the linear terms. The reason is that x<sup>p</sup> - x = x(x-1)...(x-p+1). This simple polynomial actually contains "random" p linear terms, and you can dig them out by finding the gcd.</p>
+
+    <p>If we can find a non-trivial solution to x<sup>2</sup> ≡ 1 (mod n), then we can factor n. That is to find the root of x<sup>2</sup> - 1 ≡ 0 (mod n). Then, imitating a similar routine, we need to construct a "simple" polynomial f(x) such that it has more linear terms and then find the gcd.</p>
+
+    <h2>Conclusion</h2>
+
+    <p>The integer factorization problem is undoubtedly a problem of great value. However, cryptographers publicize its hardy, and Shor's algorithm leads researchers away from the study of classical algorithms. These two ideological shackles, rather than the hardy of the technology itself, are the important reasons why no one is paying attention to this problem. Let us reiterate the core point of this article: integer factorization is an important scientific problem of extremely high value that has not been fully studied. It is an obvious rich mine in the fields of cryptography and computational number theory, and it is fully worthy of in-depth research.</p>
+
+    <h2>Author's Self-Introduction</h2>
+
+    <p>The author graduated from the ACM class of Shanghai Jiao Tong University in 2020 with a bachelor's degree. During his undergraduate studies, he won gold medals in the International Collegiate Programming Contest many times. He graduated with a Ph.D. from the School of Computer Science, Shanghai Jiao Tong University in 2025. His research direction is cryptography. He is now a postdoctoral fellow at the Institute for Advanced Study, Tsinghua University, and his supervisor is Wang Xiaoyun. During his Ph.D., he conducted in-depth research on post-quantum cryptography and quantum information, and published papers in top conferences and journals such as CRYPTO and PNAS. These fields are all based on the premise that there will be large-scale quantum computers in the future. However, the progress of quantum computers has not been smooth in recent years, which has caused some researchers, including the author, to gradually become skeptical about quantum computing. Shor's algorithm is correct in theory. The main question is when a large-scale quantum computer will be built, and whether the computational complexity of a quantum computer is really higher than that of a classical computer. The research on the latter contributed to this article.</p>
+
+    <h2>Others</h2>
+
+    <p>If readers cherish their reputation and do not want to end up like the big news in recent years that eventually fell through, such as Shor's claim to break LWE in 2016, Schnorr's claim to break RSA in 2021, and Chen Yilei's claim to break LWE in 2024, please write your own code and try to factor some public RSA moduli before making a claim. This will be very direct and powerful evidence.</p>
+
+    <p>RSA Challenge: <a href="https://en.wikipedia.org/wiki/RSA_Factoring_Challenge">https://en.wikipedia.org/wiki/RSA_Factoring_Challenge</a></p>
+
+    <p>Tool introduction: <a href="https://www.youtube.com/watch?v=OJJK3-R465c">https://www.youtube.com/watch?v=OJJK3-R465c</a></p>
+
+    <p>This is a translated version of my chinese post on Zhihu <a href="https://zhuanlan.zhihu.com/p/1944006063780234794">https://zhuanlan.zhihu.com/p/1944006063780234794</a> </p>
+
+</body>
+</html>
