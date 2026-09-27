@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Kaiyi Zhang">
+    <meta name="description" content="Personal comments on NGCC, the evaluation of hash-based signatures, and classical and quantum security requirements.">
+    <title>Comments on NGCC</title>
+</head>
+<body>
+
+    <h1>Comments on NGCC</h1>
+
+    <p>I regard my work on hash-based digital signatures as the most important outcome of my doctoral research. It was <a href="https://eprint.iacr.org/2023/850">published at CRYPTO 2023</a>, and the resulting scheme was also <a href="https://csrc.nist.gov/projects/pqc-dig-sig/round-1-additional-signatures">submitted to NIST</a>. I believe it is a strong candidate for a Chinese cryptographic standard. Unfortunately, the Institute of Commercial Cryptography Standards (ICCS) rejected my hash-based signature submission to the Next-generation Commercial Cryptographic Algorithms Program (NGCC) at the preliminary compliance review stage. The main reason given was that its quantum security fell short of 80 bits.</p>
+
+    <p>ICCS informed me of the decision in advance by telephone, and I expressed my objection. I acknowledge that there was an oversight on my part. At the same time, I believe ICCS showed a considerable lack of experience in both formulating and applying the rules. Here are the details.</p>
+
+    <p>First, when I prepared the submission, hash-based digital signatures were no longer my main research focus. I considered the field relatively mature, and I expected that adapting my existing NIST submission with minor revisions would be straightforward. I had noticed that <a href="https://www.niccs.org.cn/niccs/Notice/lDop1mav.pdf">NGCC requires</a> 128 bits of classical security and 80 bits of quantum security at its lowest security level. This pairing does not follow the usual Grover-based rule of thumb of halving the classical security level in bits, whereas the higher-level pairings of 256/128 and 512/256 bits do.</p>
+
+    <p>The technical issue, however, is more subtle. For the hash-based signature scheme at issue, a key bottleneck in the security estimate is a probabilistic collision event: multiple signatures happen to select the same leaf, potentially making a forgery possible. Writing the relevant probability as <var>p</var>, we express the corresponding classical security estimate as</p>
+
+    <p><var>sec</var><sub>classic</sub> = &minus;log<sub>2</sub> <var>p</var>.</p>
+
+    <p>For quantum security, to my knowledge, no application of Grover's algorithm is known to achieve the assumed quadratic speedup for this particular collision event. In this context, setting</p>
+
+    <p><var>sec</var><sub>quantum</sub> = &frac12; <var>sec</var><sub>classic</sub></p>
+
+    <p>is a conservative estimate. It does not establish a concrete quantum attack that achieves that cost. <a href="https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/call-for-proposals-dig-sig-sept-2022.pdf">NIST's Category 1 benchmark</a> is security comparable to AES-128, and NIST accepted our submission, with its security estimates, into its evaluation process. I took it for granted that the NGCC experts would have a comparable understanding of these technical considerations. Regrettably, their decision suggests otherwise.</p>
+
+    <p>Second, combining an 80-bit quantum-security requirement with the Grover-based halving rule effectively requires 160 bits of classical security for schemes assessed in this way. This puts those Chinese candidates at an efficiency disadvantage compared with schemes targeting 128-bit classical security in the NIST process. I do not see how following this rule will help Chinese cryptographic algorithms gain international adoption and become standards for communications around the world. If this approach continues, I expect their use to remain largely confined to meeting government or industry compliance requirements.</p>
+
+    <p>Finally, the rapid progress of artificial intelligence in mathematics and computer science points toward a future in which both the design of cryptographic algorithms and the analysis of their security can be fully automated. In my view, AI is the more consequential development of our time. It deserves greater attention than preparing for cryptographically relevant quantum computers whose arrival remains uncertain.</p>
+
+    <p>I will leave it at that for now.</p>
+
+    <p><time datetime="2026-09">September 2026</time><br>
+    Kaiyi Zhang (张凯羿)</p>
+
+    <p><a href="../index.html">Back to homepage</a></p>
+
+</body>
+</html>
