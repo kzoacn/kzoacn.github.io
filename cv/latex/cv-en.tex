@@ -1,0 +1,123 @@
+% Based on LianTze Lim's CurVe CV template (23 Oct 2022).
+% Compile with XeLaTeX and Biber; see ../README.md.
+\documentclass[a4paper,skipsamekey,11pt,english]{curve}
+\PassOptionsToPackage{no-math}{fontspec}
+\PassOptionsToPackage{style=ieee,sorting=ydnt,uniquename=init,defernumbers=true}{biblatex}
+\usepackage{cv-style}
+\DefineBibliographyStrings{english}{url={\textsc{url}}}
+\addbibresource{publications.bib}
+\mynames{Zhang/Kai-Yi,Zhang/Kai-Yi*,Zhang/Kaiyi,Zhang/Kaiyi*}
+\usepackage{fontspec}
+\usepackage[p,osf,swashQ]{cochineal}
+\usepackage[medium,bold]{cabin}
+% Keep the existing CV's Latin Modern contact and URL font.
+\renewcommand{\ttdefault}{lmr}
+
+\leftheader{%
+  {\LARGE\bfseries\sffamily Kaiyi Zhang}
+
+  \makefield{\faEnvelope[regular]}{\href{mailto:kaiyizhang@tsinghua.edu.cn}{\texttt{kaiyizhang@tsinghua.edu.cn}}}
+  \makefield{\faMobile}{\texttt{(+86)15066099436}} \\
+  \makefield{\faGithubSquare}{\href{https://github.com/kzoacn}{\texttt{kzoacn}}}
+  \makefield{\faGoogle}{\href{https://scholar.google.com/citations?user=AH-DrHsAAAAJ&hl=zh-CN}{\texttt{Kaiyi Zhang}}}
+  \makefield{\faBook}{\href{https://dblp.org/pid/254/0055-1.html}{\texttt{Kaiyi Zhang}}}
+
+}
+
+\rightheader{~}
+\photo[r]{photo}
+\photoscale{0.13}
+\title{Curriculum Vitae}
+
+\begin{document}
+\makeheaders[c]
+
+\cvrubric{Work Experience}{
+\entry*[Jul. 2025 -- Present]%
+    \textbf{Tsinghua University}
+    \par {Postdoctoral Researcher (Shuimu Tsinghua Scholar Program) at IAS}
+    \par \emph{Hosted by Professor Xiaoyun Wang.}
+}
+
+\cvrubric{Education}{
+\entry*[Sept. 2020 -- June 2025]%
+    \textbf{Shanghai Jiao Tong University}
+    \par {Doctor of Philosophy (Ph.D.) in Computer Science}
+    \par \emph{Advised by Professor Yu Yu.}
+\entry*[Sept. 2016 -- June 2020]%
+    \par \textbf{Shanghai Jiao Tong University}
+    \par {Bachelor of Engineering (B.Eng.) in Computer Science}
+    \par \emph{Member of \textbf{ACM Honors Class}, which is an elite CS program for talented students.}
+}
+
+\cvrubric{Research Interests}{
+\entry*[Current Focus]%
+    \textbf{Artificial Intelligence}
+    \par {AI for Science, AI for Math, and Embodied Intelligence.}
+\entry*[Previous Research]%
+\textbf{Post-Quantum Cryptography}
+\par {Published multiple academic papers, including first-authored papers at CRYPTO and ASIACRYPT.}
+\par {Participated in the U.S. NIST Post-Quantum Cryptography Standardization project \href{https://csrc.nist.gov/Projects/pqc-dig-sig/round-1-additional-signatures}{SPHINCS-ALPHA [Link]}.}
+\entry*[Other Research]%
+\par \textbf{Quantum Information}
+\par {First- or co-first-authored papers published in PNAS and npj Quantum Information.}
+\par \textbf{Zero-Knowledge Proofs, Secure Multi-Party Computation}
+\par {Published several academic papers.}
+}
+
+\cvrubric{Research Funding}{
+\entry*[NSFC]%
+    \textbf{Young Scientists Fund}
+    \par {National Natural Science Foundation of China}
+    \par {Algebraic Cryptanalysis of Arithmetization-Oriented Symmetric Primitives}
+    \par {Grant No. 62602352}
+}
+
+\makerubrichead{Research Publications}
+\nocite{*}
+\printbibliography[heading=none]
+
+\cvrubric{Research Experience}{
+\entry*[Aug. 2019 -- Dec. 2019]%
+    \textbf{Northwestern University}
+    \par \emph{Advised by Professor \href{https://wangxiao1254.github.io}{Xiao Wang}}
+\entry*[July 2018 - Sept. 2020]%
+    \par \textbf{Shanghai Jiao Tong University}
+    \par \emph{Advised by Professor Yu Yu}
+}
+
+\clearpage
+\cvrubric{Honors and Awards}{
+\entry*[2025] \textbf{Outstanding Doctoral Dissertation}, China Computer Federation
+\entry*[2020] \textbf{First Prize}, The 2020 Financial Cryptography Contest.
+\entry*[2017] \textbf{Gold Medal}, The 2017 CCPC China Final Contest.
+\entry*[2017] \textbf{Gold Medal}, The 2017 ACM ICPC East Continent League Final.
+\entry*[2017] \textbf{Gold Medal}, The 2017 ACM ICPC Asia Hong Kong Contest.
+\entry*[2017] \textbf{Gold Medal}, The 2017 CCPC Qinhuangdao Contest.
+\entry*[2017] \textbf{Gold Medal}, The 2017 ACM ICPC Asia Shenyang Regional Contest.
+\entry*[2016] \textbf{Gold Medal}, The 2016 ACM ICPC Asia Yangon Regional  Contest.
+\entry*[2016] \textbf{Gold Medal}, The 2016 CCPC Hefei Contest.
+\entry*[2016] \textbf{Gold Medal}, The 2016 ACM ICPC Asia QingDao Regional Contest.
+\entry*[2015] \textbf{Bronze Medal}, The 32nd China National Olympiad in Informatics.
+}
+
+\cvrubric{Teaching Experience}{
+\entry*[Spring 2019]%
+    \textbf{(SJTU MS208) Compiler Design and Implementation}
+    \par \emph{Lead Teaching Assistant}
+\entry*[Fall 2018]%
+    \par \textbf{SJTU ACM-ICPC Team}
+    \par \emph{Coach}
+\entry*[Spring 2018]%
+    \par \textbf{(SJTU CS147) Data Structures}
+    \par \emph{Teaching Assistant}
+}
+
+\cvrubric{Other Experience}{
+\entry*[July 2019]%
+    \par \textbf{The 36th China National Olympiad in Informatics}
+    \par \emph{Referee}
+    \par {Provided several problems to the contest committee.}
+}
+
+\end{document}

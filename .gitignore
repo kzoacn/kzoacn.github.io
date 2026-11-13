@@ -1,0 +1,21 @@
+# LaTeX intermediates; published PDFs and the CV bundle stay tracked.
+/cv/latex/build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Local editor and operating-system files.
+.DS_Store
+Thumbs.db
+*~
+*.swp
+__pycache__/

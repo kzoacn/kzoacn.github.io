@@ -1,0 +1,151 @@
+% Based on LianTze Lim's CurVe CV template (23 Oct 2022).
+% Compile with XeLaTeX and Biber; see ../README.md.
+\documentclass[a4paper,skipsamekey,11pt,english]{curve}
+\PassOptionsToPackage{no-math}{fontspec}
+\usepackage[fontset=fandol]{ctex}
+\continuedname{（续）}
+\PassOptionsToPackage{style=ieee,sorting=ydnt,uniquename=init,defernumbers=true}{biblatex}
+\usepackage{cv-style}
+\DefineBibliographyStrings{english}{url={\textsc{url}}}
+\addbibresource{publications.bib}
+\mynames{Zhang/Kai-Yi,Zhang/Kai-Yi*,Zhang/Kaiyi,Zhang/Kaiyi*}
+\usepackage{fontspec}
+\usepackage[p,osf,swashQ]{cochineal}
+\usepackage[medium,bold]{cabin}
+% Keep the existing CV's Latin Modern contact and URL font.
+\renewcommand{\ttdefault}{lmr}
+
+\leftheader{%
+  {\LARGE\bfseries\sffamily 张凯羿}
+
+  \makefield{\faEnvelope[regular]}{\href{mailto:kaiyizhang@tsinghua.edu.cn}{\texttt{kaiyizhang@tsinghua.edu.cn}}}
+  \makefield{\faMobile}{\texttt{(+86)15066099436}} \\
+  \makefield{\faGithubSquare}{\href{https://github.com/kzoacn}{\texttt{kzoacn}}}
+  \makefield{\faGoogle}{\href{https://scholar.google.com/citations?user=AH-DrHsAAAAJ&hl=zh-CN}{\texttt{Kaiyi Zhang}}}
+  \makefield{\faBook}{\href{https://dblp.org/pid/254/0055-1.html}{\texttt{Kaiyi Zhang}}}
+
+}
+
+\rightheader{~}
+\photo[r]{photo}
+\photoscale{0.13}
+\title{Curriculum Vitae}
+
+\begin{document}
+\makeheaders[c]
+
+\cvrubric{工作经历}{
+\entry*[2025年7月 -- 至今]%
+    \textbf{清华大学}
+    \par {高等研究院~水木学者博士后}
+    \par \emph{博士后导师：王小云院士}
+}
+
+\cvrubric{教育经历}{
+\entry*[2020年9月 -- 2025年6月]%
+    \textbf{上海交通大学}
+    \par {计算机科学与技术~博士}
+    \par \emph{导师：郁昱教授.}
+\entry*[2016年9月 -- 2020年6月]%
+    \par \textbf{上海交通大学}
+    \par {计算机科学与技术~学士}
+    \par \emph{毕业于致远学院ACM班.}
+}
+
+\cvrubric{研究方向}{
+\entry*[当前研究方向]%
+    \textbf{人工智能}
+    \par {AI for Science、AI for Math、具身智能}
+\entry*[此前研究方向]%
+    \textbf{后量子密码}
+        \par {发表多篇学术论文，其中以第一作者发表于CRYPTO,ASIACRYPT各一篇}
+        \par {参与美国NIST后量子密码标准征集 \href{https://csrc.nist.gov/Projects/pqc-dig-sig/round-1-additional-signatures}{SPHINCS-ALPHA [Link]}}
+\entry*[其他研究方向]%
+    \par \textbf{量子信息}
+    \par {以第一作者或共同第一作者发表于PNAS,npj quantum inf.三篇}
+    \par \textbf{零知识证明、安全多方计算}
+        \par {发表若干学术论文 }
+}
+
+\cvrubric{科研项目}{
+\entry*[青年基金]%
+    \textbf{国家自然科学基金青年科学基金项目}
+    \par {面向算术化对称原语的代数安全性分析}
+    \par {项目批准号：62602352}
+}
+
+\cvrubric{个人技能}{
+\entry*[专业能力]%
+    \textbf{编程能力}
+    \par {熟悉C++, Python}
+    \par {曾参与程序设计竞赛，熟悉各类常见算法、数据结构}
+        \par {熟悉 Linux 系统常用操作}
+        \par {熟悉密码学项目工程，所有参与的学术论文的代码实现均由我本人完成 \href{https://github.com/kzoacn?tab=repositories}{[GitHub]}}
+\entry*[其他能力]%
+    \textbf{论文撰写}
+    \par {熟悉\LaTeX, 撰写并发表过多篇学术论文}
+    \par \textbf{语言}
+    \par {母语汉语，英语流利}
+}
+
+\cvrubric{发明专利}{
+\entry*[2024]%
+    \textbf{量子不经意传输方法、系统、服务器及存储介质}
+        \par {申请人：国科量子通信网络有限公司}
+        \par {申请号：2024105973684}
+
+\entry*[2022]%
+    \par \textbf{适用于闪烁探测器的低中放固废γ能谱解析方法及系统}
+        \par {申请人：上海交通大学}
+    \par {申请号：2022115643272}
+        \par {帮助核物理舍友完成了相关代码实现}
+}
+
+\makerubrichead{学术论文}
+\nocite{*}
+\printbibliography[heading=none]
+
+\cvrubric{研究经历}{
+\entry*[2019年8月 -- 2019年12月]%
+    \textbf{美国西北大学}
+    \par \emph{实习，导师：汪骁教授}
+    \par {主要研究内容为安全多方计算}
+\entry*[2018年7月 - 2020年9月]%
+    \par \textbf{上海交通大学}
+    \par \emph{实习，导师：郁昱教授}
+}
+
+\clearpage
+\cvrubric{成就与奖项}{
+\entry*[2025] \textbf{博士学位论文激励计划（原优博）}, 中国计算机学会.
+\entry*[2020] \textbf{一等奖}, 2020年金融密码杯全国密码应用和技术创新大赛.
+\entry*[2017] \textbf{金牌}, 2017年中国大学生程序设计竞赛(CCPC)决赛.
+\entry*[2017] \textbf{金牌}, 2017年国际大学生程序设计竞赛(ICPC)东大陆决赛.
+\entry*[2017] \textbf{金牌}, 2017年国际大学生程序设计竞赛(ICPC)香港站.
+\entry*[2017] \textbf{金牌}, 2017年中国大学生程序设计竞赛(CCPC)秦皇岛站.
+\entry*[2017] \textbf{金牌}, 2017年国际大学生程序设计竞赛(ICPC)沈阳站.
+\entry*[2016] \textbf{金牌}, 2016年国际大学生程序设计竞赛(ICPC)仰光站.
+\entry*[2016] \textbf{金牌}, 2016年中国大学生程序设计竞赛(CCPC)合肥站.
+\entry*[2016] \textbf{金牌}, 2016年国际大学生程序设计竞赛(ICPC)青岛站.
+\entry*[2015] \textbf{铜牌}, 第32届全国青少年信息学奥林匹克竞赛(NOI).
+}
+
+\cvrubric{教学经历}{
+\entry*[2019年春季]%
+    \textbf{(SJTU MS208) 编译原理}
+    \par \emph{助教}
+\entry*[2018年秋季]%
+    \par \textbf{上海交通大学ACM-ICPC队}
+    \par \emph{教练}
+\entry*[2018年春季]%
+    \par \textbf{(SJTU CS147) 数据结构}
+    \par \emph{助教}
+}
+
+\cvrubric{其他经历}{
+\entry*[2019年7月]%
+    \par \textbf{第36届全国青少年信息学奥林匹克竞赛(NOI)}
+    \par \emph{裁判、命题人}
+}
+
+\end{document}
